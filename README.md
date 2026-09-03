@@ -1,4 +1,4 @@
-# 🚀 Novara – AI-Powered Placement Preparation Platform
+# 🚀 Careercopilot– AI-Powered Placement Preparation Platform
 
 <div align="center">
 
