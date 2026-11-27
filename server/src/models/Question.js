@@ -28,7 +28,7 @@ const questionSchema = new mongoose.Schema(
         },
         source: {
             type: String,
-            default: "Novara AI",
+            default: "CareerCopilot AI",
         },
         url: {
             type: String,

@@ -23,28 +23,34 @@ export const sendVerificationEmail = async (email, token) => {
     const verifyUrl = `${clientUrl}/#/verify-email/${token}`;
 
     if (!isEmailConfigured()) {
+        if (process.env.NODE_ENV === "production") {
+            throw new Error("Email delivery is not configured");
+        }
+
         console.log("\n--- Email verification (SMTP not configured) ---");
         console.log(`To: ${email}`);
         console.log(`Verify: ${verifyUrl}`);
         console.log("------------------------------------------------\n");
-        return;
+        return { sent: false, verificationUrl: verifyUrl };
     }
 
     const transporter = getTransporter();
     const from = process.env.SMTP_FROM || process.env.SMTP_USER;
 
     await transporter.sendMail({
-        from: `"Novara" <${from}>`,
+        from: `"CareerCopilot" <${from}>`,
         to: email,
-        subject: "Verify your Novara account",
+        subject: "Verify your CareerCopilot account",
         html: `
-            <h2>Welcome to Novara</h2>
+            <h2>Welcome to CareerCopilot</h2>
             <p>Click the link below to verify your email address:</p>
             <a href="${verifyUrl}">${verifyUrl}</a>
             <p>This link expires in 24 hours.</p>
             <p>If you did not create an account, you can ignore this email.</p>
         `,
     });
+
+    return { sent: true };
 };
 
 export const sendPasswordResetEmail = async (email, token) => {
@@ -63,9 +69,9 @@ export const sendPasswordResetEmail = async (email, token) => {
     const from = process.env.SMTP_FROM || process.env.SMTP_USER;
 
     await transporter.sendMail({
-        from: `"Novara" <${from}>`,
+        from: `"CareerCopilot" <${from}>`,
         to: email,
-        subject: "Reset your Novara password",
+        subject: "Reset your CareerCopilot password",
         html: `
             <h2>Password Reset</h2>
             <p>Click the link below to reset your password:</p>

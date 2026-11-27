@@ -53,7 +53,7 @@ app.use("/api/admin", adminRoutes);
 
 // Root route
 app.get("/", (req, res) => {
-    res.send("Novara API is running");
+    res.send("CareerCopilot API is running");
 });
 
 // Health check
