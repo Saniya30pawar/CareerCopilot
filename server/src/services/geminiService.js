@@ -260,18 +260,18 @@ export const callGeminiTextWithFallback = async (prompt, systemInstruction = "")
  */
 export const generateChatResponse = async (chatHistory, newPrompt) => {
     try {
-        const systemInstruction = "You are Novara, a helpful, encouraging, and highly knowledgeable AI Career Assistant and placement preparation coach. Help candidates with resume enhancement suggestions, career roadmaps, technical and behavioral interview guidance, and explanation of coding/theory concepts. Keep responses structured and easy to read using markdown formatting.";
+        const systemInstruction = "You are CareerCopilot, a helpful, encouraging, and highly knowledgeable AI Career Assistant and placement preparation coach. Help candidates with resume enhancement suggestions, career roadmaps, technical and behavioral interview guidance, and explanation of coding/theory concepts. Keep responses structured and easy to read using markdown formatting.";
         
         let formattedPrompt = "";
         if (chatHistory && chatHistory.length > 0) {
             formattedPrompt += "Previous Conversation:\n";
             chatHistory.forEach(msg => {
-                const prefix = msg.sender === "user" ? "Candidate" : "Novara";
+                const prefix = msg.sender === "user" ? "Candidate" : "CareerCopilot";
                 formattedPrompt += `${prefix}: ${msg.text}\n`;
             });
             formattedPrompt += "\n";
         }
-        formattedPrompt += `Candidate's New Message:\n${newPrompt}\n\nNovara:`;
+        formattedPrompt += `Candidate's New Message:\n${newPrompt}\n\nCareerCopilot:`;
 
         const responseText = await callGeminiTextWithFallback(formattedPrompt, systemInstruction);
         return responseText;
@@ -318,7 +318,7 @@ Return ONLY a JSON object with the following exact keys and structure:
       "title": "Question Title",
       "description": "Question details",
       "difficulty": "Medium",
-      "source": "Novara AI",
+    "source": "CareerCopilot AI",
       "url": "",
       "correctAnswer": "Reference answer explanation"
     }
@@ -346,15 +346,15 @@ Rules:
                 { phase: "Phase 1: Fundamentals", description: `Learn basics of ${topic}`, resources: ["GeeksforGeeks", "MDN / Official docs"] },
                 { phase: "Phase 2: Core Concepts", description: `Explore intermediate items of ${topic}`, resources: ["TutorialsPoint", "Medium articles"] },
                 { phase: "Phase 3: Deep Dive & Troubleshooting", description: `Advanced operations and practices`, resources: ["StackOverflow", "YouTube courses"] },
-                { phase: "Phase 4: Interview & Practice", description: `Mock interview and problem solving`, resources: ["LeetCode", "Novara Mock Interview"] }
+                { phase: "Phase 4: Interview & Practice", description: `Mock interview and problem solving`, resources: ["LeetCode", "CareerCopilot Mock Interview"] }
             ],
             questions: [
-                { type: "THEORY", title: `What is ${topic}?`, description: `Explain core concepts of ${topic}.`, difficulty: "Easy", source: "Novara AI", url: "", correctAnswer: `Detailed overview of ${topic}.` },
-                { type: "CODING", title: `Reverse/Implement ${topic}`, description: `Write a simple program demonstrating ${topic}.`, difficulty: "Easy", source: "Novara AI", url: "", correctAnswer: "Code demonstration." },
-                { type: "THEORY", title: `Common pitfalls in ${topic}`, description: `List 3 common problems when using ${topic}.`, difficulty: "Medium", source: "Novara AI", url: "", correctAnswer: "Pitfalls overview." },
-                { type: "CODING", title: `Optimize ${topic} algorithm`, description: `Given a bottleneck, optimize the usage of ${topic}.`, difficulty: "Medium", source: "Novara AI", url: "", correctAnswer: "Optimized code snippet." },
-                { type: "INTERVIEW", title: `How does ${topic} compare?`, description: `Explain differences between ${topic} and other paradigms.`, difficulty: "Medium", source: "Novara AI", url: "", correctAnswer: " Paradigms comparison." },
-                { type: "BEHAVIORAL", title: "Tell me about a time you solved a problem", description: `Describe a scenario where you had to apply ${topic} under tight deadline.`, difficulty: "Medium", source: "Novara AI", url: "", correctAnswer: "STAR method behavioral sample answer." }
+                { type: "THEORY", title: `What is ${topic}?`, description: `Explain core concepts of ${topic}.`, difficulty: "Easy", source: "CareerCopilot AI", url: "", correctAnswer: `Detailed overview of ${topic}.` },
+                { type: "CODING", title: `Reverse/Implement ${topic}`, description: `Write a simple program demonstrating ${topic}.`, difficulty: "Easy", source: "CareerCopilot AI", url: "", correctAnswer: "Code demonstration." },
+                { type: "THEORY", title: `Common pitfalls in ${topic}`, description: `List 3 common problems when using ${topic}.`, difficulty: "Medium", source: "CareerCopilot AI", url: "", correctAnswer: "Pitfalls overview." },
+                { type: "CODING", title: `Optimize ${topic} algorithm`, description: `Given a bottleneck, optimize the usage of ${topic}.`, difficulty: "Medium", source: "CareerCopilot AI", url: "", correctAnswer: "Optimized code snippet." },
+                { type: "INTERVIEW", title: `How does ${topic} compare?`, description: `Explain differences between ${topic} and other paradigms.`, difficulty: "Medium", source: "CareerCopilot AI", url: "", correctAnswer: " Paradigms comparison." },
+                { type: "BEHAVIORAL", title: "Tell me about a time you solved a problem", description: `Describe a scenario where you had to apply ${topic} under tight deadline.`, difficulty: "Medium", source: "CareerCopilot AI", url: "", correctAnswer: "STAR method behavioral sample answer." }
             ]
         };
     }

@@ -29,12 +29,14 @@ export const register = async (req, res) => {
             verificationTokenExpire: expire,
         });
 
-        await sendVerificationEmail(email, token);
+        const delivery = await sendVerificationEmail(email, token);
 
         res.status(201).json({
-            message:
-                "Registration successful. Please check your email to verify your account.",
+            message: delivery.sent
+                ? "Registration successful. Please check your email to verify your account."
+                : "Email delivery is not configured. Use the development link below to verify your account.",
             email: user.email,
+            verificationUrl: delivery.verificationUrl,
         });
     } catch (error) {
         console.error("Register error:", error);
@@ -129,9 +131,14 @@ export const resendVerification = async (req, res) => {
         user.verificationTokenExpire = expire;
         await user.save();
 
-        await sendVerificationEmail(email, token);
+        const delivery = await sendVerificationEmail(email, token);
 
-        res.json({ message: "Verification email sent successfully." });
+        res.json({
+            message: delivery.sent
+                ? "Verification email sent successfully."
+                : "Email delivery is not configured. Use the development link below to verify your account.",
+            verificationUrl: delivery.verificationUrl,
+        });
     } catch (error) {
         console.error("Resend verification error:", error);
         res.status(500).json({ message: "Server error" });
